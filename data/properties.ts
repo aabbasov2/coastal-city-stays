@@ -1,0 +1,58 @@
+import { Property } from '@/types/property'
+
+export const properties: Property[] = [
+  {
+    id: '950298220670088594',
+    name: 'Ocean View Oasis Near Convention Center & Beach',
+    description: 'Experience luxury living in this stunning ocean view apartment. Located in the heart of Long Beach, this modern oasis offers breathtaking views of the Pacific and easy access to the Convention Center and beach. Perfect for both business travelers and vacation seekers.',
+    location: 'Long Beach, California, United States',
+    price: 189,
+    images: [
+      'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?auto=format&fit=crop&w=1200&q=80',
+    ],
+    amenities: [
+      'Ocean View',
+      'Free WiFi',
+      'Kitchen',
+      'Air Conditioning',
+      'TV',
+      'Washer & Dryer',
+      'Elevator',
+      'Free Parking',
+    ],
+    bedrooms: 1,
+    bathrooms: 1,
+    maxGuests: 4,
+    rating: 4.9,
+    reviews: 125,
+  },
+  {
+    id: '1203264619974687444',
+    name: 'Ocean View Studio Near Convention Center and Beach',
+    description: 'Cozy and modern studio apartment with stunning ocean views. This perfectly located unit puts you steps away from the beach, dining, and entertainment. Ideal for solo travelers or couples looking for a romantic getaway.',
+    location: 'Long Beach, California, United States',
+    price: 159,
+    images: [
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1617098900591-3f90928e8c54?auto=format&fit=crop&w=1200&q=80',
+    ],
+    amenities: [
+      'Ocean View',
+      'Free WiFi',
+      'Kitchenette',
+      'Air Conditioning',
+      'Smart TV',
+      'Building Gym',
+      'Secured Entry',
+      'Beach Essentials',
+    ],
+    bedrooms: 0,
+    bathrooms: 1,
+    maxGuests: 2,
+    rating: 4.8,
+    reviews: 89,
+  },
+]
