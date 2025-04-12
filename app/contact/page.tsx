@@ -63,7 +63,7 @@ export default function Contact() {
                 Get in Touch
               </h1>
               <p className="text-xl md:text-2xl text-white drop-shadow-md">
-                We're here to help make your coastal getaway perfect
+                We&apos;re here to help make your coastal getaway perfect
               </p>
             </div>
           </div>
@@ -81,7 +81,7 @@ export default function Contact() {
               
               {isSubmitted ? (
                 <div className="bg-green-50 text-green-800 p-4 rounded-lg mb-6">
-                  Thank you for your message! We'll get back to you soon.
+                  Thank you for your message! We&apos;ll get back to you soon.
                 </div>
               ) : null}
 

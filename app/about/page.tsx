@@ -10,14 +10,14 @@ const reviews = [
     image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80"
   },
   {
-    text: "One of the best vacation rentals we've ever experienced. The location was perfect, and the host's communication was outstanding. They truly care about their guests' experience.",
+    text: "One of the best vacation rentals we&apos;ve ever experienced. The location was perfect, and the host&apos;s communication was outstanding. They truly care about their guests&apos; experience.",
     author: "James L.",
     location: "London, UK",
     rating: 5,
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80"
   },
   {
-    text: "Exceptional service and a beautiful property. Every detail was thoughtfully considered, from the welcome basket to the local guide. We'll definitely be coming back!",
+    text: "Exceptional service and a beautiful property. Every detail was thoughtfully considered, from the welcome basket to the local guide. We&apos;ll definitely be coming back!",
     author: "Maria R.",
     location: "Toronto, Canada",
     rating: 5,
@@ -72,7 +72,7 @@ export default function About() {
                 Our commitment to excellence has earned us recognition as a top-rated host, with countless five-star reviews and returning guests who consider our properties their home away from home.
               </p>
               <p className="text-sky-800 text-lg">
-                We believe in creating more than just a place to stay – we're crafting memorable experiences that last a lifetime.
+                We believe in creating more than just a place to stay &ndash; we&apos;re crafting memorable experiences that last a lifetime.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4">
