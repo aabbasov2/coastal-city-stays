@@ -4,10 +4,13 @@ import { useState } from 'react'
 import { properties } from '@/data/properties'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
+import { Metadata } from 'next'
 
-type PageParams = { id: string }
-
-export default function PropertyPage({ params }: { params: PageParams }) {
+export default function PropertyPage({
+  params,
+}: {
+  params: { id: string }
+}) {
   const property = properties.find((p) => p.id === params.id)
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
   const [formData, setFormData] = useState({
