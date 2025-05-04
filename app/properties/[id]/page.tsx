@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { properties } from '@/data/properties'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
-import { Metadata } from 'next'
 
 export default function PropertyPage({
   params,
