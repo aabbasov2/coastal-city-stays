@@ -86,7 +86,7 @@ export default function About() {
               </div>
               <div className="space-y-6">
                 <p className="text-sky-800 text-lg">
-                  We're proudly based in Long Beach, California—a vibrant coastal city where laid-back beach vibes meet energetic urban living. Guests love our proximity to the ocean, popular restaurants, the downtown arts district, and scenic waterfront spots like Shoreline Village and the Queen Mary. Whether you're catching a sunset or exploring the local scene, Long Beach offers the perfect blend of relaxation and adventure.
+                  We&apos;re proudly based in Long Beach, California—a vibrant coastal city where laid-back beach vibes meet energetic urban living. Guests love our proximity to the ocean, popular restaurants, the downtown arts district, and scenic waterfront spots like Shoreline Village and the Queen Mary. Whether you&apos;re catching a sunset or exploring the local scene, Long Beach offers the perfect blend of relaxation and adventure.
                 </p>
               </div>
             </div>
@@ -98,7 +98,7 @@ export default function About() {
             </h2>
             <div className="text-center">
               <p className="text-sky-800 text-lg mb-6">
-                We're committed to providing spotless spaces, responsive support, and a seamless experience from booking to checkout. Guest satisfaction and comfort are at the core of everything we do.
+                We&apos;re committed to providing spotless spaces, responsive support, and a seamless experience from booking to checkout. Guest satisfaction and comfort are at the core of everything we do.
               </p>
             </div>
           </div>
