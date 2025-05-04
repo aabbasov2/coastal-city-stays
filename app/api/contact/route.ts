@@ -155,7 +155,7 @@ export async function POST(request: Request) {
       success: true,
       message: 'Message sent successfully!'
     })
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     console.error('Error sending email:', error)
     return NextResponse.json(
       {

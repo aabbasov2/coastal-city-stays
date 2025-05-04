@@ -33,7 +33,7 @@ export default function About() {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
                 <p className="text-sky-800 text-lg">
-                  Coastal City Stays was founded with a simple idea: to create welcoming, stylish stays for travelers who want the best of both the coast and the city. Whether you're here for business or pleasure, our properties are designed for comfort, convenience, and a touch of local charm.
+                  Our properties are carefully selected to offer the perfect blend of modern comfort and coastal charm. Each stay is thoughtfully designed to make you feel right at home, with all the amenities you need for a comfortable stay. Whether you&#39;re looking for a cozy retreat or a spacious family home, we have the perfect place for you.
                 </p>
               </div>
               <div className="flex justify-center">
