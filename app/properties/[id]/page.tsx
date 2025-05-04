@@ -4,8 +4,23 @@ import { useState } from 'react'
 import { properties } from '@/data/properties'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
+import { Metadata } from 'next'
 
-export default function PropertyPage({
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const property = properties.find((p) => p.id === params.id)
+  if (!property) {
+    return {
+      title: 'Property Not Found',
+      description: 'The requested property could not be found.',
+    }
+  }
+  return {
+    title: `${property.name} - Coastal City Stays`,
+    description: property.description,
+  }
+}
+
+export default async function PropertyPage({
   params,
 }: {
   params: { id: string }
