@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, use } from 'react'
+import { useState } from 'react'
 import { properties } from '@/data/properties'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
@@ -8,8 +8,7 @@ import Image from 'next/image'
 type PageParams = { id: string }
 
 export default function PropertyPage({ params }: { params: PageParams }) {
-  const unwrappedParams = use(params as unknown as Promise<PageParams>)
-  const property = properties.find((p) => p.id === unwrappedParams.id)
+  const property = properties.find((p) => p.id === params.id)
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
   const [formData, setFormData] = useState({
     name: '',
@@ -55,7 +54,7 @@ export default function PropertyPage({ params }: { params: PageParams }) {
         body: JSON.stringify({
           ...formData,
           propertyName: property.name,
-          propertyId: unwrappedParams.id,
+          propertyId: params.id,
           subject: `Reservation for ${property.name} (${formData.checkIn} - ${formData.checkOut})`
         }),
       })
