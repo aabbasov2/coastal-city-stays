@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Playfair_Display, Lato } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -15,8 +16,12 @@ const lato = Lato({
 })
 
 export const metadata: Metadata = {
-  title: 'Coastal City Stays - Luxury Beach Rentals',
+  title: 'Coastal City Stays™ - Luxury Beach Rentals',
   description: 'Find your perfect beachfront vacation rental with Coastal City Stays.',
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
 }
 
 export default function RootLayout({
@@ -29,6 +34,7 @@ export default function RootLayout({
       <body className={`${playfair.variable} ${lato.variable} font-sans`}>
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   )

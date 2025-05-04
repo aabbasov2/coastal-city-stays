@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Favicon</title>
+</head>
+<body>
+    <img src="C:\Users\aziza\Desktop\long beach, ca\Modern Badge Logo for Coastal City Stays.png" id="logo" style="display: none;">
+    <script>
+        const logo = document.getElementById('logo');
+        const canvas = document.createElement('canvas');
+        canvas.width = 16;
+        canvas.height = 16;
+        
+        const ctx = canvas.getContext('2d');
+        logo.onload = () => {
+            ctx.drawImage(logo, 0, 0, 16, 16);
+            const dataURL = canvas.toDataURL('image/png');
+            
+            // Create a link element to download the favicon
+            const a = document.createElement('a');
+            a.href = dataURL;
+            a.download = 'favicon.ico';
+            a.click();
+        };
+    </script>
+</body>
+</html>
