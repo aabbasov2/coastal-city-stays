@@ -1,10 +1,7 @@
-'use client'
-
-import { useState } from 'react'
+import { Metadata } from 'next'
 import { properties } from '@/data/properties'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
-import { Metadata } from 'next'
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const property = properties.find((p) => p.id === params.id)
@@ -25,6 +22,321 @@ export default async function PropertyPage({
 }: {
   params: { id: string }
 }) {
+  const property = properties.find((p) => p.id === params.id)
+  if (!property) {
+    notFound()
+  }
+
+  return <PropertyDetails property={property} />
+}
+
+'use client'
+
+import { useState } from 'react'
+
+function PropertyDetails({ property }: { property: any }) {
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    checkIn: '',
+    checkOut: '',
+    guests: '',
+    specialRequests: ''
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+
+  const nextPhoto = () => {
+    setCurrentPhotoIndex((prev) => (prev + 1) % property.images.length)
+  }
+
+  const previousPhoto = () => {
+    setCurrentPhotoIndex((prev) => (prev - 1 + property.images.length) % property.images.length)
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          propertyName: property.name,
+          propertyId: property.id,
+          subject: `Reservation for ${property.name} (${formData.checkIn} - ${formData.checkOut})`
+        }),
+      })
+
+      if (response.ok) {
+        setShowSuccessMessage(true)
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          checkIn: '',
+          checkOut: '',
+          guests: '',
+          specialRequests: ''
+        })
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  return (
+    <main className="pt-16">
+      {/* Hero Section */}
+      <section className="relative h-[60vh] overflow-hidden">
+        <Image
+          src={property.images[currentPhotoIndex]}
+          alt={property.name}
+          fill
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-sky-600/30 to-sky-100/30">
+          <div className="max-w-7xl mx-auto px-4 h-full flex flex-col justify-end">
+            <div className="text-white">
+              <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">
+                {property.name}
+              </h1>
+              <p className="text-xl md:text-2xl mb-8">
+                {property.description}
+              </p>
+              <div className="flex gap-8">
+                <div className="flex items-center space-x-2">
+                  <span className="text-2xl">${property.price}</span>
+                  <span className="text-sky-100">/ night</span>
+                </div>
+                <button
+                  onClick={handleSubmit}
+                  disabled={isSubmitting}
+                  className="bg-white text-sky-800 px-8 py-3 rounded-full font-semibold hover:bg-sky-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? 'Submitting...' : 'Book Now'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Property Details */}
+      <section className="py-20 px-4 bg-gradient-to-b from-sky-50 to-white">
+        <div className="max-w-7xl mx-auto">
+          {/* Photo Gallery */}
+          <div className="mb-16">
+            <div className="relative h-96 overflow-hidden rounded-2xl shadow-lg">
+              <Image
+                src={property.images[currentPhotoIndex]}
+                alt={property.name}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="flex justify-center space-x-2 mt-4">
+              {property.images.map((image: string, index: number) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentPhotoIndex(index)}
+                  className={`w-16 h-16 rounded-lg border-2 ${
+                    currentPhotoIndex === index
+                      ? 'border-sky-500'
+                      : 'border-transparent hover:border-sky-300'
+                  }`}
+                >
+                  <Image
+                    src={image}
+                    alt={`${property.name} - Photo ${index + 1}`}
+                    fill
+                    className="object-cover"
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Property Details */}
+          <div className="grid md:grid-cols-2 gap-12">
+            <div>
+              <h2 className="text-3xl font-display font-bold mb-6">Property Details</h2>
+              <div className="space-y-6">
+                <div className="flex items-center space-x-4">
+                  <div className="w-12 h-12 rounded-full bg-sky-100 flex items-center justify-center">
+                    <svg className="w-6 h-6 text-sky-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold">Location</h3>
+                    <p className="text-gray-600">{property.location}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-4">
+                  <div className="w-12 h-12 rounded-full bg-sky-100 flex items-center justify-center">
+                    <svg className="w-6 h-6 text-sky-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold">Amenities</h3>
+                    <ul className="text-gray-600">
+                      {property.amenities.map((amenity: string) => (
+                        <li key={amenity} className="flex items-center space-x-2">
+                          <svg className="w-5 h-5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                          <span>{amenity}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Booking Form */}
+            <div className="bg-white p-8 rounded-2xl shadow-sm border border-sky-100">
+              <h2 className="text-3xl font-display font-bold mb-6">Book Your Stay</h2>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                      Full Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-sky-500 focus:border-sky-500"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-sky-500 focus:border-sky-500"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="checkIn" className="block text-sm font-medium text-gray-700 mb-1">
+                      Check-In Date
+                    </label>
+                    <input
+                      type="date"
+                      id="checkIn"
+                      name="checkIn"
+                      value={formData.checkIn}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-sky-500 focus:border-sky-500"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="checkOut" className="block text-sm font-medium text-gray-700 mb-1">
+                      Check-Out Date
+                    </label>
+                    <input
+                      type="date"
+                      id="checkOut"
+                      name="checkOut"
+                      value={formData.checkOut}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-sky-500 focus:border-sky-500"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="guests" className="block text-sm font-medium text-gray-700 mb-1">
+                    Number of Guests
+                  </label>
+                  <select
+                    id="guests"
+                    name="guests"
+                    value={formData.guests}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-sky-500 focus:border-sky-500"
+                  >
+                    <option value="">Select number of guests</option>
+                    <option value="1">1 Guest</option>
+                    <option value="2">2 Guests</option>
+                    <option value="3">3 Guests</option>
+                    <option value="4">4 Guests</option>
+                    <option value="5">5 Guests</option>
+                    <option value="6+">6+ Guests</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="specialRequests" className="block text-sm font-medium text-gray-700 mb-1">
+                    Special Requests
+                  </label>
+                  <textarea
+                    id="specialRequests"
+                    name="specialRequests"
+                    value={formData.specialRequests}
+                    onChange={handleChange}
+                    rows={4}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-sky-500 focus:border-sky-500"
+                    placeholder="Any special requests or preferences?"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-sky-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-sky-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? 'Submitting...' : 'Send Inquiry'}
+                </button>
+
+                {showSuccessMessage && (
+                  <div className="mt-4 p-4 text-center bg-green-50 text-green-700 rounded-lg">
+                    Your inquiry has been sent successfully! We'll get back to you soon.
+                  </div>
+                )}
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  )
+}
   const property = properties.find((p) => p.id === params.id)
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
   const [formData, setFormData] = useState({
