@@ -61,6 +61,11 @@ function buildEmailContent(data: EmailData) {
 
 export async function POST(request: NextRequest) {
   // 1️⃣ Ensure API key is set
+  // Near the top of your POST function
+console.log('Environment check:', {
+  hasSendGridKey: Boolean(process.env.SENDGRID_API_KEY),
+  nodeEnv: process.env.NODE_ENV
+})
   const apiKey = process.env.SENDGRID_API_KEY
   if (!apiKey) {
     console.error('❌ SENDGRID_API_KEY missing')
